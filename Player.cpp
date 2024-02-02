@@ -8,7 +8,7 @@ Player::Player()
 	pos_ = { 0,0 };
 	radius_ = 30;
 	velocity_ = { 0,0 };
-	color_ = 0xb3ffbfFF;
+	color_ = 0;
 	canShoot_ = true;
 	shootInterval_ = 0;
 	mousePos_ = { 0,0 };
@@ -32,6 +32,7 @@ void Player::Init()
 	canShoot_ = true;
 	shootInterval_ = kShotInterval;
 	mousePos_ = { 0,0 };
+	color_ = 0xa0d8efFF;
 	isAlive_ = true;
 	respwaninterval_ = kPlayerRespawninterval;
 }
