@@ -3,7 +3,7 @@
 #include "IntVector2.h"
 #include "Vector2.h"
 
-const int kPlayerMoveSpeed = 7;
+const int kPlayerMoveSpeed = 4;
 const int kShotInterval = 12;
 const int kPlayerRespawninterval = 120;
 
