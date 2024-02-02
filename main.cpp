@@ -1,5 +1,8 @@
 #include <Novice.h>
+
+#include "Enemy.h"
 #include "Player.h"
+#include "Collision.h"
 
 const char kWindowTitle[] = "LC1A_13_クリハラ_ケント_タイトル";
 
@@ -22,6 +25,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//プレイヤー
 	Player *player = new Player();
 	player->Init();
+
+	//エネミー
+	Enemy* enemy = new Enemy();
+	enemy->Init();
+
+	//当たり判定
+	Collision *collision = new Collision;
+	collision->Init();
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -47,6 +58,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case GAME:
 			player->Update(keys);
+			enemy->Update();
+			//collision->Update(*player, *enemy);
 			break;
 		case RESULT:
 			break;
@@ -78,17 +91,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (curentScene)
 		{
 		case TITLE:
+
 			//現在のシーン
 			Novice::ScreenPrintf(100, 100, "curent Scene : TITLE");
+
 			break;
+
 		case GAME:
+
+			//オブジェクトの描画
 			player->Draw();
+			enemy->Draw();
+			
+
 			//現在のシーン
 			Novice::ScreenPrintf(100, 100, "curent Scene : GAME");
+
 			break;
+
 		case RESULT:
+
 			//現在のシーン
 			Novice::ScreenPrintf(100, 100, "curent Scene : RESULT");
+
 			break;
 		}
 
@@ -107,6 +132,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//メモリ開放
 	delete player;
+	delete enemy;
+	delete collision;
 
 	// ライブラリの終了
 	Novice::Finalize();

@@ -9,6 +9,7 @@ Bullet::Bullet()
 	velocity_ = { 0,0 };
 	radius_ = kBulletRadius;
 	isShot_ = false;
+	color_ = 0;
 }
 
 void Bullet::Init()

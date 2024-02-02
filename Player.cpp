@@ -1,6 +1,4 @@
 #include "Player.h"
-
-#include <algorithm>
 #include "Bullet.h"
 #include "Novice.h"
 #include "Clamp.h"
@@ -14,6 +12,9 @@ Player::Player()
 	canShoot_ = true;
 	shootInterval_ = 0;
 	mousePos_ = { 0,0 };
+
+	isAlive_ = false;
+	respwaninterval_ = 0;
 }
 
 Player::~Player()
@@ -29,9 +30,10 @@ void Player::Init()
 	velocity_ = { 0,0 };
 	bullet.clear();
 	canShoot_ = true;
-	shootInterval_ = kInterval;
+	shootInterval_ = kShotInterval;
+	mousePos_ = { 0,0 };
 	isAlive_ = true;
-	respwaninterval_ = kRespawninterval;
+	respwaninterval_ = kPlayerRespawninterval;
 }
 
 void Player::Update(char* keys)
@@ -65,34 +67,44 @@ void Player::Update(char* keys)
 		pos_.y = Clamp(0 + float(radius_), 720 - float(radius_), pos_.y);
 
 		velocity_ = { 0,0 };
+
+
+		//マウスの座標
+		Novice::GetMousePosition(&mousePos_.x, &mousePos_.y);
+
+		//弾の発射
+		if (Novice::IsPressMouse(0) && canShoot_ && isAlive_)
+		{
+			//弾の発射間隔の調整
+			canShoot_ = false;
+			Bullet* newBullet = new Bullet();
+			newBullet->Init();
+
+			//弾の生成
+
+			bullet.push_back(newBullet);
+			newBullet->SetIsShot(true);
+
+			//弾の情報を代入
+			newBullet->SetPos({ float(pos_.x),float(pos_.y) });
+			newBullet->SetVelocity({ 10.0f,10.0f });
+
+			//マウスの方向に向けて発射
+			float angle = atan2f(float(mousePos_.y) - pos_.y, float(mousePos_.x) - pos_.x);
+			newBullet->SetVector({ cosf(angle), sinf(angle) });
+
+			//弾の発射間隔の時間設定
+			shootInterval_ = kShotInterval;
+		}
 	}
-
-	//マウスの座標
-	Novice::GetMousePosition(&mousePos_.x, &mousePos_.y);
-
-	//弾の発射
-	if (Novice::IsPressMouse(0) && canShoot_ && isAlive_)
+	else
 	{
-		//弾の発射間隔の調整
-		canShoot_ = false;
-		Bullet* newBullet = new Bullet();
-		newBullet->Init();
-
-		//弾の生成
-
-		bullet.push_back(newBullet);
-		newBullet->isShot_ = true;
-
-		//弾の情報を代入
-		newBullet->pos_ = { float(pos_.x),float(pos_.y) };
-		newBullet->velocity_ = { 10.0f,10.0f };
-
-		//マウスの方向に向けて発射
-		float angle = atan2f(float(mousePos_.y) - pos_.y, float(mousePos_.x) - pos_.x);
-		newBullet->vector_ = { cosf(angle), sinf(angle) };
-
-		//弾の発射間隔の時間設定
-		shootInterval_ = kInterval;
+		respwaninterval_--;
+		if(respwaninterval_ <= 0)
+		{
+			isAlive_ = true;
+			respwaninterval_ = kPlayerRespawninterval;
+		}
 	}
 
 	auto iterator = bullet.begin();
@@ -101,7 +113,7 @@ void Player::Update(char* keys)
 		//弾の更新処理
 		(*iterator)->Update();
 		//弾を消す処理
-		if ((*iterator)->isShot_)
+		if ((*iterator)->GetIsShot())
 		{
 			++iterator;
 		}

@@ -4,8 +4,8 @@
 #include "Vector2.h"
 
 const int kPlayerMoveSpeed = 7;
-const int kInterval = 12;
-const int kRespawninterval = 120;
+const int kShotInterval = 12;
+const int kPlayerRespawninterval = 120;
 
 class Bullet;
 class Player
@@ -18,7 +18,17 @@ public:
 	void Draw();
 
 	//アクセッサ
-	
+	//ゲッター
+	Vector2 GetPos() { return pos_; }
+	int GetRadius() { return radius_; }
+	Vector2 GetVelocity() { return velocity_; }
+	bool GetIsAlive() { return isAlive_; }
+	std::vector<Bullet*> GetBullet() { return bullet; }
+
+	//セッター
+	void SetPos(Vector2 pos) { this->pos_ = pos; }
+	void SetVelocity(Vector2 velocity) { this->velocity_ = velocity; }
+	void SetIsAlive(bool isAlive) { this->isAlive_ = isAlive; }
 
 private:
 	//プレイヤーの情報
