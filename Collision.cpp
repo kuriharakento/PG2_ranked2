@@ -30,26 +30,27 @@ void Collision::Update(Player& player, Enemy& enemy)
 	}
 
 	//敵と弾の当たり判定
-	auto iterator = player.GetBullet().begin();
-	while (!player.GetBullet().empty() && iterator != player.GetBullet().end())
+	const std::vector<Bullet*> myCopy = player.GetBullet();
+	std::vector<Bullet*>::const_iterator i = myCopy.begin();
+	while (i != myCopy.end())
 	{
 		//表示されているなら実行する
-		if ((*iterator)->GetIsShot() && enemy.GetIsAlive())
+		if ((*i)->GetIsShot() && enemy.GetIsAlive())
 		{
-			bulletToEnemyCollision.a = powf((*iterator)->GetPos().x - enemy.GetPos().x, 2);
-			bulletToEnemyCollision.b = powf((*iterator)->GetPos().y - enemy.GetPos().y, 2);
-			bulletToEnemyCollision.c = powf((*iterator)->GetRadius() + float(enemy.GetRadius()), 2);
+			bulletToEnemyCollision.a = powf((*i)->GetPos().x - enemy.GetPos().x, 2);
+			bulletToEnemyCollision.b = powf((*i)->GetPos().y - enemy.GetPos().y, 2);
+			bulletToEnemyCollision.c = powf((*i)->GetRadius() + float(enemy.GetRadius()), 2);
 
 			//判定
 			if (bulletToEnemyCollision.c >= bulletToEnemyCollision.a + bulletToEnemyCollision.b)
 			{
 				//当たっていたので弾と敵を消す
 				enemy.SetIsAlive(false);
-				(*iterator)->SetIsShot(false);
-				iterator = player.GetBullet().erase(iterator);
+				(*i)->SetIsShot(false);
 			}
+
 		}
-		++iterator;
+		i++;
 	}
 }
 

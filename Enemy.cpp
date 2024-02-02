@@ -60,11 +60,13 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-	Novice::DrawEllipse(
-		(int)pos_.x, (int)pos_.y,
-		radius_, radius_,
-		0.0f,
-		color_,
-		kFillModeSolid
-	);
+	if (isAlive_) {
+		Novice::DrawEllipse(
+			(int)pos_.x, (int)pos_.y,
+			radius_, radius_,
+			0.0f,
+			color_,
+			kFillModeSolid
+		);
+	}
 }
