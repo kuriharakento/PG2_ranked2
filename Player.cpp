@@ -14,7 +14,7 @@ Player::Player()
 	mousePos_ = { 0,0 };
 
 	isAlive_ = false;
-	respwaninterval_ = 0;
+	respawnInterval_ = 0;
 }
 
 Player::~Player()
@@ -33,7 +33,7 @@ void Player::Init()
 	shootInterval_ = kShotInterval;
 	mousePos_ = { 0,0 };
 	isAlive_ = true;
-	respwaninterval_ = kPlayerRespawninterval;
+	respawnInterval_ = kPlayerRespawninterval;
 }
 
 void Player::Update(char* keys)
@@ -99,11 +99,11 @@ void Player::Update(char* keys)
 	}
 	else
 	{
-		respwaninterval_--;
-		if(respwaninterval_ <= 0)
+		respawnInterval_--;
+		if(respawnInterval_ <= 0)
 		{
 			isAlive_ = true;
-			respwaninterval_ = kPlayerRespawninterval;
+			respawnInterval_ = kPlayerRespawninterval;
 		}
 	}
 

@@ -19,11 +19,11 @@ public:
 
 	//アクセッサ
 	//ゲッター
-	Vector2 GetPos() { return pos_; }
-	int GetRadius() { return radius_; }
-	Vector2 GetVelocity() { return velocity_; }
-	bool GetIsAlive() { return isAlive_; }
-	std::vector<Bullet*> GetBullet() { return bullet; }
+	Vector2 GetPos() const {return pos_;}
+	int GetRadius() const { return radius_; }
+	Vector2 GetVelocity() const { return velocity_; }
+	bool GetIsAlive() const { return isAlive_; }
+	std::vector<Bullet*> & GetBullet() { return bullet; }
 
 	//セッター
 	void SetPos(Vector2 pos) { this->pos_ = pos; }
@@ -38,7 +38,7 @@ private:
 	unsigned int color_;
 
 	bool isAlive_;
-	int respwaninterval_;
+	int respawnInterval_;
 
 	//マウスの座標
 	IntVector2 mousePos_;

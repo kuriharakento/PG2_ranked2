@@ -59,7 +59,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		case GAME:
 			player->Update(keys);
 			enemy->Update();
-			//collision->Update(*player, *enemy);
+			collision->Update(player, enemy);
 			break;
 		case RESULT:
 			break;

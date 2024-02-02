@@ -14,7 +14,7 @@ class Collision
 public:
 	Collision();
 	void Init();
-	void Update(Player &player, Enemy &enemy);
+	void Update(Player *player, Enemy *enemy);
 
 private:
 	CircleCollision playerToEnemyCollision;
