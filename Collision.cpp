@@ -45,8 +45,12 @@ void Collision::Update(Player& player, Enemy& enemy)
 			if (bulletToEnemyCollision.c >= bulletToEnemyCollision.a + bulletToEnemyCollision.b)
 			{
 				//当たっていたので弾と敵を消す
-				enemy.SetIsAlive(false);
 				(*i)->SetIsShot(false);
+				enemy.SetRadius(enemy.GetRadius() - decrementValue);
+				if (enemy.GetRadius() <= 0) {
+					enemy.SetIsAlive(false);
+					enemy.SetRadius(kEnemyRadius);
+				}
 			}
 
 		}

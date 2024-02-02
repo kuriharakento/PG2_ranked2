@@ -17,6 +17,7 @@ public:
 	void Update(Player &player, Enemy &enemy);
 
 private:
+	int decrementValue = 10;
 	CircleCollision playerToEnemyCollision;
 	CircleCollision bulletToEnemyCollision;
 };

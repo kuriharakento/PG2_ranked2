@@ -4,8 +4,8 @@
 #define _USE_MATH_DEFINES
 #include "math.h"
 
-
 const int kEnemyRespawninterval = 120;
+const int kEnemyRadius = 70;
 
 class Enemy
 {
@@ -27,6 +27,7 @@ public:
 	void SetPos(Vector2 pos) { this->pos_ = pos; }
 	void SetVelocity(Vector2 velocity) { this->velocity_ = velocity; }
 	void SetVector(Vector2 vector) { this->vector_ = vector; }
+	void SetRadius(int radius) { this->radius_ = radius; }
 	void SetIsAlive(bool isAlive) { this->isAlive_ = isAlive; }
 
 private:

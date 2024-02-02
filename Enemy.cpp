@@ -18,7 +18,7 @@ Enemy::Enemy()
 void Enemy::Init()
 {
 	pos_ = { 640,100 };
-	radius_ = 30;
+	radius_ = kEnemyRadius;
 	velocity_ = { 5.0f,5.0f };
 	vector_ = { sinf((rand() % 360) * (float(M_PI) / 180.f)),	cosf((rand() % 360) * (float(M_PI) / 180.f)) };
 	color_ = RED;
@@ -53,6 +53,7 @@ void Enemy::Update()
 		if(respwaninterval_ <= 0)
 		{
 			isAlive_ = true;
+			vector_ = { sinf((rand() % 360) * (float(M_PI) / 180.f)),	cosf((rand() % 360) * (float(M_PI) / 180.f)) };
 			respwaninterval_ = kEnemyRespawninterval;
 		}
 	}
