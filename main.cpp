@@ -1,17 +1,8 @@
 #include <Novice.h>
-
-#include "Enemy.h"
-#include "Player.h"
-#include "Collision.h"
+#include "SceneManager.h"
 
 const char kWindowTitle[] = "LC1A_13_クリハラ_ケント_タイトル";
 
-enum Scene
-{
-	TITLE,
-	GAME,
-	RESULT
-};
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -19,24 +10,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
-	//シーン
-	Scene curentScene = TITLE;
-
-	//プレイヤー
-	Player *player = new Player();
-	player->Init();
-
-	//エネミー
-	Enemy* enemy = new Enemy();
-	enemy->Init();
-
-	//当たり判定
-	Collision *collision = new Collision;
-	collision->Init();
-
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
+
+	SceneManager* sceneManager = new SceneManager();
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -51,34 +29,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
-		switch (curentScene)
-		{
-		case TITLE:
-			
-			break;
-		case GAME:
-			player->Update(keys);
-			enemy->Update();
-			collision->Update(*player, *enemy);
-			break;
-		case RESULT:
-			break;
-		}
-
-		//デバッグ用
-		//ステージを数字で切り替える
-		if(keys[DIK_1] && !preKeys[DIK_1])
-		{
-			curentScene = TITLE;
-		}
-		if (keys[DIK_2] && !preKeys[DIK_2])
-		{
-			curentScene = GAME;
-		}
-		if (keys[DIK_3] && !preKeys[DIK_3])
-		{
-			curentScene = RESULT;
-		}
+		sceneManager->SwitchScene();
+		sceneManager->Update(keys, preKeys);
+		
+	
 
 		///
 		/// ↑更新処理ここまで
@@ -88,34 +42,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		switch (curentScene)
-		{
-		case TITLE:
+		sceneManager->Draw();
 
-			//現在のシーン
-			Novice::ScreenPrintf(100, 100, "curent Scene : TITLE");
-
-			break;
-
-		case GAME:
-
-			//オブジェクトの描画
-			player->Draw();
-			enemy->Draw();
-			
-
-			//現在のシーン
-			Novice::ScreenPrintf(100, 100, "curent Scene : GAME");
-
-			break;
-
-		case RESULT:
-
-			//現在のシーン
-			Novice::ScreenPrintf(100, 100, "curent Scene : RESULT");
-
-			break;
-		}
+		
 
 		///
 		/// ↑描画処理ここまで
@@ -131,9 +60,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	//メモリ開放
-	delete player;
-	delete enemy;
-	delete collision;
+	delete sceneManager;
 
 	// ライブラリの終了
 	Novice::Finalize();

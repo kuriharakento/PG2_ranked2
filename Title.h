@@ -1,12 +1,13 @@
 #pragma once
-#include "Scene.h"
+#include "IScene.h"
+
 class Title :
-    public Scene
+	public IScene
 {
 public:
-    Title();
-    
-    void Update() override;
-    void Draw() override;
+	Title();
+	void Init() override;
+	void Update(char* keys, char* preKeys, enumScene &enumNextScene) override;
+	void Draw() override;
 };
 

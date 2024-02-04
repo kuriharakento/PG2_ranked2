@@ -53,10 +53,13 @@
     <ClCompile Include="Collision.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="Title.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Title.cpp">
+    <ClCompile Include="Game.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -138,7 +141,10 @@
     <ClInclude Include="IntVector2.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="IScene.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="EnumScene.h" />
   </ItemGroup>
 </Project>
